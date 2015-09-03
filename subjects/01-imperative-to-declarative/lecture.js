@@ -216,101 +216,101 @@ styles.theremin = {
 ////////////////////////////////////////////////////////////////////////////////
 // Let's go all the way and make a Theremin component
 
-//let Tone = React.createClass({
+let Tone = React.createClass({
 
-  //getDefaultProps () {
-    //return {
-      //pitch: 50,
-      //volume: 50,
-      //type: 'sine'
-    //}
-  //},
+  getDefaultProps () {
+    return {
+      pitch: 50,
+      volume: 50,
+      type: 'sine'
+    }
+  },
 
-  //componentWillMount () {
-    //this.theremin = createTheremin()
-  //},
+  componentWillMount () {
+    this.theremin = createTheremin()
+  },
 
-  //componentDidMount () {
-    //this.doImperativeWork()
-  //},
+  componentDidMount () {
+    this.doImperativeWork()
+  },
 
-  //componentDidUpdate () {
-    //this.doImperativeWork()
-  //},
+  componentDidUpdate () {
+    this.doImperativeWork()
+  },
 
-  //doImperativeWork () {
-    //if (this.props.isPlaying)
-      //this.theremin.play()
-    //else
-      //this.theremin.stop()
+  doImperativeWork () {
+    if (this.props.isPlaying)
+      this.theremin.play()
+    else
+      this.theremin.stop()
 
-    //this.theremin.setPitchBend(this.props.pitch)
-    //this.theremin.setVolume(this.props.volume)
-    //this.theremin.setType(this.props.type)
-  //},
+    this.theremin.setPitchBend(this.props.pitch)
+    this.theremin.setVolume(this.props.volume)
+    this.theremin.setType(this.props.type)
+  },
 
-  //render () {
-    //return null
-  //}
-//})
+  render () {
+    return null
+  }
+})
 
-//let Theremin = React.createClass({
-  //getInitialState () {
-    //return {
-      //isPlaying: false,
-      //pitch: 0,
-      //volume: 0
-    //}
-  //},
+let Theremin = React.createClass({
+  getInitialState () {
+    return {
+      isPlaying: false,
+      pitch: 0,
+      volume: 0
+    }
+  },
 
-  //play () {
-    //this.setState({ isPlaying: true })
-  //},
+  play () {
+    this.setState({ isPlaying: true })
+  },
 
-  //stop () {
-    //this.setState({ isPlaying: false })
-  //},
+  stop () {
+    this.setState({ isPlaying: false })
+  },
 
-  //changeTone (event) {
-    //let { clientX, clientY } = event
-    //let { top, right, bottom, left } = event.target.getBoundingClientRect()
-    //let pitch = (clientX - left) / right
-    //let volume = 1 - (clientY - top) / bottom
-    //this.setState({ pitch, volume })
-  //},
+  changeTone (event) {
+    let { clientX, clientY } = event
+    let { top, right, bottom, left } = event.target.getBoundingClientRect()
+    let pitch = (clientX - left) / right
+    let volume = 1 - (clientY - top) / bottom
+    this.setState({ pitch, volume })
+  },
 
-  //render () {
-    //return (
-      //<div
-        //style={styles.theremin}
-        //onMouseEnter={this.play}
-        //onMouseLeave={this.stop}
-        //onMouseMove={this.changeTone}
-      //>
-        //<Tone
-          //pitch={this.state.pitch}
-          //volume={this.state.volume}
-          //isPlaying={this.state.isPlaying}
-          //type={this.props.type}
-        ///>
-      //</div>
-    //)
-  //}
-//})
+  render () {
+    return (
+      <div
+        style={styles.theremin}
+        onMouseEnter={this.play}
+        onMouseLeave={this.stop}
+        onMouseMove={this.changeTone}
+      >
+        <Tone
+          pitch={this.state.pitch}
+          volume={this.state.volume}
+          isPlaying={this.state.isPlaying}
+          type={this.props.type}
+        />
+      </div>
+    )
+  }
+})
 
-//let App = React.createClass({
-  //render () {
-    //return (
-      //<div>
-        //<h1>What does it mean to be declarative?</h1>
-        //<Theremin type="sine"/>
-        //<Theremin type="triangle"/>
-        //<Theremin type="square"/>
-        //<Theremin type="sawtooth"/>
-      //</div>
-    //)
-  //}
-//});
+let App = React.createClass({
+  render () {
+    return (
+      <div>
+        <h1>What does it mean to be declarative?</h1>
+        <Theremin type="sine"/>
+        <Theremin type="triangle"/>
+        <Theremin type="square"/>
+        <Theremin type="sawtooth"/>
+      </div>
+    )
+  }
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // When you isolate all imperative work into components then the application

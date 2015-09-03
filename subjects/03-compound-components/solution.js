@@ -92,7 +92,7 @@ var App = React.createClass({
   render () {
     return (
       <div>
-        <h1>♬ It's about time that we all turned off the radio ♫</h1>
+        <h1>♬ It`s about time that we all turned off the radio ♫</h1>
 
         <h2>Radio Value: {this.state.radioValue}</h2>
 

@@ -12,6 +12,26 @@ import React from 'react'
 import { render, findDOMNode } from 'react-dom'
 
 var Modal = React.createClass({
+  propTypes: {
+    isOpen: React.PropTypes.bool.isRequired
+  },
+
+  componentDidMount () {
+    this.doImperativeWork()
+  },
+
+  componentDidUpdate () {
+    this.doImperativeWork()
+  },
+
+  doImperativeWork () {
+    var $el = $(findDOMNode(this))
+    if (this.props.isOpen === true)
+      $el.modal('show')
+    else
+      $el.modal('hide')
+  },
+
   render () {
     return (
       <div className="modal fade">
@@ -32,12 +52,18 @@ var Modal = React.createClass({
 
 var App = React.createClass({
 
+  getInitialState () {
+    return {
+      modalIsOpen: false
+    }
+  },
+
   openModal () {
-    $(findDOMNode(this.refs.modal)).modal('show')
+    this.setState({ modalIsOpen: true })
   },
 
   closeModal () {
-    $(findDOMNode(this.refs.modal)).modal('hide')
+    this.setState({ modalIsOpen: false })
   },
 
   render () {
@@ -50,7 +76,7 @@ var App = React.createClass({
           onClick={this.openModal}
         >open modal</button>
 
-        <Modal ref="modal" title="Declarative is better">
+        <Modal isOpen={this.state.modalIsOpen} title="Declarative is better">
           <p>Calling methods on instances is a FLOW not a STOCK!</p>
           <p>It’s the dynamic process, not the static program in text space.</p>
           <p>You have to experience it over time, rather than in snapshots of state.</p>

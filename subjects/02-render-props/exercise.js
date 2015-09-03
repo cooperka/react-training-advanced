@@ -24,16 +24,9 @@ import { listen } from './lib/log'
 class Tail extends React.Component {
 
   render() {
-    let { lines } = this.props
+    let { lines, num, children } = this.props
 
-    // hint: get this rendering outta here and into App
-    return (
-      <ul>
-        {lines.map((line, index) => (
-          <li key={index}>{line}</li>
-        ))}
-      </ul>
-    )
+    return children(lines.slice(-num));
   }
 
 }
@@ -56,12 +49,21 @@ class App extends React.Component {
     })
   }
 
+  // See solution.js for PinnedToBottom class
   render() {
     return (
       <div>
         <h1>Heads up Eggman, here comes <code>&lt;Tails&gt;</code>s!</h1>
         <div style={{ height: 400, overflowY: 'scroll', border: '1px solid' }}>
-          <Tail lines={this.state.lines} />
+          <Tail lines={this.state.lines} num={20}>
+            {(truncatedLines) => (
+              <ul>
+                {truncatedLines.map((line, index) => (
+                  <li key={index}>{line}</li>
+                ))}
+              </ul>
+            )}
+          </Tail>
         </div>
       </div>
     )

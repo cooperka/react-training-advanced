@@ -12,228 +12,226 @@ import * as styles from './lib/styles'
 // We could recursively check children with each render, which seems like a bad
 // plan, so instead we can use a feature called "context"
 
-//var TabList = React.createClass({
-  //render () {
-    //var children = React.Children.map(this.props.children, (child, index) => {
-      //return React.cloneElement(child, {
-        //isActive: index === this.props.activeIndex,
-        //onClick: () => this.props.onActivate(index)
-      //})
-    //});
-    //return <div style={styles.tabs}>{children}</div>
-  //}
-//});
+// var TabList = React.createClass({
+//   render () {
+//     var children = React.Children.map(this.props.children, (child, index) => {
+//       return React.cloneElement(child, {
+//         isActive: index === this.props.activeIndex,
+//         onClick: () => this.props.onActivate(index)
+//       })
+//     });
+//     return <div style={styles.tabs}>{children}</div>
+//   }
+// });
 
-//var Tab = React.createClass({
-  //render () {
-    //return (
-      //<div
-        //onClick={this.props.disabled ? null : this.props.onClick}
-        //style={this.props.disabled ? styles.disabledTab : (
-          //this.props.isActive ? styles.activeTab : styles.tab
-        //)}
-      //>
-        //{this.props.children}
-      //</div>
-    //);
-  //}
-//});
+// var Tab = React.createClass({
+//   render () {
+//     return (
+//       <div
+//         onClick={this.props.disabled ? null : this.props.onClick}
+//         style={this.props.disabled ? styles.disabledTab : (
+//           this.props.isActive ? styles.activeTab : styles.tab
+//         )}
+//       >
+//         {this.props.children}
+//       </div>
+//     );
+//   }
+// });
 
-//var TabPanels = React.createClass({
-  //render () {
-    //return (
-      //<div style={styles.tabPanels}>
-        //{this.props.children[this.props.activeIndex]}
-      //</div>
-    //);
-  //}
-//});
+// var TabPanels = React.createClass({
+//   render () {
+//     return (
+//       <div style={styles.tabPanels}>
+//         {this.props.children[this.props.activeIndex]}
+//       </div>
+//     );
+//   }
+// });
 
-//var TabPanel = React.createClass({
-  //render () {
-    //return <div>{this.props.children}</div>
-  //}
-//});
+// var TabPanel = React.createClass({
+//   render () {
+//     return <div>{this.props.children}</div>
+//   }
+// });
 
-//var Tabs = React.createClass({
+// var Tabs = React.createClass({
 
-  //getInitialState() {
-    //return {
-      //activeIndex: 0
-    //};
-  //},
+//   getInitialState() {
+//     return {
+//       activeIndex: 0
+//     };
+//   },
 
-  //render() {
-    //var children = React.Children.map(this.props.children, (child, index) => {
-      //if (child.type === TabPanels) {
-        //return React.cloneElement(child, {
-          //activeIndex: this.state.activeIndex
-        //});
-      //}
-      //else if (child.type === TabList) {
-        //return React.cloneElement(child, {
-          //activeIndex: this.state.activeIndex,
-          //onActivate: (activeIndex) => this.setState({ activeIndex })
-        //});
-      //}
-      //else {
-        //return child;
-      //}
-    //});
+//   render() {
+//     var children = React.Children.map(this.props.children, (child, index) => {
+//       if (child.type === TabPanels) {
+//         return React.cloneElement(child, {
+//           activeIndex: this.state.activeIndex
+//         });
+//       }
+//       else if (child.type === TabList) {
+//         return React.cloneElement(child, {
+//           activeIndex: this.state.activeIndex,
+//           onActivate: (activeIndex) => this.setState({ activeIndex })
+//         });
+//       }
+//       else {
+//         return child;
+//       }
+//     });
 
-    //return <div>{children}</div>;
-  //}
-//});
+//     return <div>{children}</div>;
+//   }
+// });
 
-//var App = React.createClass({
-  //render () {
-    //return (
-      //<div>
-        //<Tabs>
-          //<TabList>
-            //<Tab>Tacos</Tab>
-            //<Tab disabled>Burritos</Tab>
-            //<Tab>Coconut Korma</Tab>
-          //</TabList>
+// var App = React.createClass({
+//   render () {
+//     return (
+//       <div>
+//         <Tabs>
+//           <TabList>
+//             <Tab>Tacos</Tab>
+//             <Tab disabled>Burritos</Tab>
+//             <Tab>Coconut Korma</Tab>
+//           </TabList>
 
-          //<TabPanels>
-            //<TabPanel>
-              //<p>Tacos are delicious</p>
-            //</TabPanel>
-            //<TabPanel>
-              //<p>Sometimes a burrito is what you really need.</p>
-            //</TabPanel>
-            //<TabPanel>
-              //<p>Might be your best option.</p>
-            //</TabPanel>
-          //</TabPanels>
-        //</Tabs>
-      //</div>
-    //);
-  //}
-//});
+//           <TabPanels>
+//             <TabPanel>
+//               <p>Tacos are delicious</p>
+//             </TabPanel>
+//             <TabPanel>
+//               <p>Sometimes a burrito is what you really need.</p>
+//             </TabPanel>
+//             <TabPanel>
+//               <p>Might be your best option.</p>
+//             </TabPanel>
+//           </TabPanels>
+//         </Tabs>
+//       </div>
+//     );
+//   }
+// });
 
-//render(<App/>, document.getElementById('app'))
+// render(<App/>, document.getElementById('app'))
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // wrapping TabPanels in a div breaks everything, lets introduce context
 
-//var TabList = React.createClass({
-  //render () {
-    //var children = React.Children.map(this.props.children, (child, index) => {
-      //return React.cloneElement(child, {
-        //isActive: index === this.props.activeIndex,
-        //onClick: () => this.props.onActivate(index)
-      //})
-    //});
-    //return <div style={styles.tabs}>{children}</div>
-  //}
-//});
+// var TabList = React.createClass({
+//   render () {
+//     var children = React.Children.map(this.props.children, (child, index) => {
+//       return React.cloneElement(child, {
+//         isActive: index === this.props.activeIndex,
+//         onClick: () => this.props.onActivate(index)
+//       })
+//     });
+//     return <div style={styles.tabs}>{children}</div>
+//   }
+// });
 
-//var Tab = React.createClass({
-  //render () {
-    //return (
-      //<div
-        //onClick={this.props.disabled ? null : this.props.onClick}
-        //style={this.props.disabled ? styles.disabledTab : (
-          //this.props.isActive ? styles.activeTab : styles.tab
-        //)}
-      //>
-        //{this.props.children}
-      //</div>
-    //);
-  //}
-//});
+// var Tab = React.createClass({
+//   render () {
+//     return (
+//       <div
+//         onClick={this.props.disabled ? null : this.props.onClick}
+//         style={this.props.disabled ? styles.disabledTab : (
+//           this.props.isActive ? styles.activeTab : styles.tab
+//         )}
+//       >
+//         {this.props.children}
+//       </div>
+//     );
+//   }
+// });
 
-//var TabPanels = React.createClass({
-  //contextTypes: {
-    //activeIndex: React.PropTypes.number
-  //},
+// var TabPanels = React.createClass({
+//   contextTypes: {
+//     activeIndex: React.PropTypes.number
+//   },
 
-  //render () {
-    //return (
-      //<div style={styles.tabPanels}>
-        //{this.props.children[this.context.activeIndex]}
-      //</div>
-    //);
-  //}
-//});
+//   render () {
+//     return (
+//       <div style={styles.tabPanels}>
+//         {this.props.children[this.context.activeIndex]}
+//       </div>
+//     );
+//   }
+// });
 
-//var TabPanel = React.createClass({
-  //render () {
-    //return <div>{this.props.children}</div>
-  //}
-//});
+// var TabPanel = React.createClass({
+//   render () {
+//     return <div>{this.props.children}</div>
+//   }
+// });
 
-//var Tabs = React.createClass({
+// var Tabs = React.createClass({
 
-  //getInitialState() {
-    //return {
-      //activeIndex: 0
-    //};
-  //},
+//   getInitialState() {
+//     return {
+//       activeIndex: 0
+//     };
+//   },
 
-  //childContextTypes: {
-    //activeIndex: React.PropTypes.number
-  //},
+//   childContextTypes: {
+//     activeIndex: React.PropTypes.number
+//   },
 
-  //getChildContext () {
-    //return {
-      //activeIndex: this.state.activeIndex
-    //};
-  //},
+//   getChildContext () {
+//     return {
+//       activeIndex: this.state.activeIndex
+//     };
+//   },
 
-  //render() {
-    //var children = React.Children.map(this.props.children, (child, index) => {
-      //if (child.type === TabList) {
-        //return React.cloneElement(child, {
-          //activeIndex: this.state.activeIndex,
-          //onActivate: (activeIndex) => this.setState({ activeIndex })
-        //});
-      //}
-      //else {
-        //return child;
-      //}
-    //});
+//   render() {
+//     var children = React.Children.map(this.props.children, (child, index) => {
+//       if (child.type === TabList) {
+//         return React.cloneElement(child, {
+//           activeIndex: this.state.activeIndex,
+//           onActivate: (activeIndex) => this.setState({ activeIndex })
+//         });
+//       }
+//       else {
+//         return child;
+//       }
+//     });
 
-    //return <div>{children}</div>;
-  //}
-//});
+//     return <div>{children}</div>;
+//   }
+// });
 
-//var App = React.createClass({
-  //render () {
-    //return (
-      //<div>
-        //<Tabs>
-          //<TabList>
-            //<Tab>Tacos</Tab>
-            //<Tab disabled>Burritos</Tab>
-            //<Tab>Coconut Korma</Tab>
-          //</TabList>
+// var App = React.createClass({
+//   render () {
+//     return (
+//       <div>
+//         <Tabs>
+//           <TabList>
+//             <Tab>Tacos</Tab>
+//             <Tab disabled>Burritos</Tab>
+//             <Tab>Coconut Korma</Tab>
+//           </TabList>
 
-          //<div>
-            //<TabPanels>
-              //<TabPanel>
-                //<p>Tacos are delicious</p>
-              //</TabPanel>
-              //<TabPanel>
-                //<p>Sometimes a burrito is what you really need.</p>
-              //</TabPanel>
-              //<TabPanel>
-                //<p>Might be your best option.</p>
-              //</TabPanel>
-            //</TabPanels>
-          //</div>
-        //</Tabs>
-      //</div>
-    //);
-  //}
-//});
+//           <div>
+//             <TabPanels>
+//               <TabPanel>
+//                 <p>Tacos are delicious</p>
+//               </TabPanel>
+//               <TabPanel>
+//                 <p>Sometimes a burrito is what you really need.</p>
+//               </TabPanel>
+//               <TabPanel>
+//                 <p>Might be your best option.</p>
+//               </TabPanel>
+//             </TabPanels>
+//           </div>
+//         </Tabs>
+//       </div>
+//     );
+//   }
+// });
 
-//render(<App/>, document.getElementById('app'))
-
-
+// render(<App/>, document.getElementById('app'));
 
 
 
@@ -341,4 +339,3 @@ var App = React.createClass({
 });
 
 render(<App/>, document.getElementById('app'))
-

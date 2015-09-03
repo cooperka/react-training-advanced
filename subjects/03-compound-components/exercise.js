@@ -36,16 +36,34 @@ var RadioIcon = React.createClass({
 });
 
 var RadioGroup = React.createClass({
+  getInitialState () {
+    return {
+      value: this.props.defaultValue
+    };
+  },
+
+  select (value) {
+    this.setState({ value }, () => {
+      this.props.onChange(this.state.value)
+    })
+  },
+
   render () {
-    return <div>{this.props.children}</div>
+    var children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        isSelected: child.props.value === this.state.value,
+        onClick: () => this.select(child.props.value)
+      });
+    });
+    return <div>{children}</div>
   }
 });
 
 var RadioOption = React.createClass({
   render () {
     return (
-      <div>
-        <RadioIcon isSelected={false}/> {this.props.children}
+      <div onClick={this.props.onClick}>
+        <RadioIcon isSelected={this.props.isSelected}/> {this.props.children}
       </div>
     )
   }
@@ -61,7 +79,7 @@ var App = React.createClass({
   render () {
     return (
       <div>
-        <h1>♬ It's about time that we all turned off the radio ♫</h1>
+        <h1>♬ It`s about time that we all turned off the radio ♫</h1>
 
         <h2>Radio Value: {this.state.radioValue}</h2>
 
