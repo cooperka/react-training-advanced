@@ -121,6 +121,20 @@ class App extends React.Component {
           <Tail lines={this.state.lines} n={5}>
             {(truncatedLines) => (
               <ul>
+                {/*
+                // // 2 nodes replaced in the DOM every time
+                // {truncatedLines.map((line, index) => (
+                //   <li key={line}>{line}</li>
+                // ))}
+                // // 10 nodes replaced every time
+                // {truncatedLines.map((line, index) => (
+                //   <li key={index}>{line}</li>
+                // ))}
+                // // Random number replaced every time
+                // {randomSort(truncatedLines).map((line, index) => (
+                //   <li key={line}>{line}</li>
+                // ))}
+                */}
                 {truncatedLines.map((line, index) => (
                   <li key={line}>{line}</li>
                 ))}
@@ -133,6 +147,12 @@ class App extends React.Component {
     )
   }
 
+}
+
+function randomSort(array) {
+  return array.sort(function () {
+    return Math.random() > 0.5 ? -1 : (Math.random() < 0.9 ? 1 : 0);
+  });
 }
 
 render(<App />, document.getElementById('app'))

@@ -9,6 +9,12 @@ for (let i = 0; i < 2000; i++)
   ITEMS.push({ id: ++guid, body: `item ${guid}` })
 
 class TodoItem extends React.Component {
+  // // Not good practice!
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // This totally fixes the speed issue on its own
+  //   return nextProps.body != this.props.body;
+  // }
+
   render () {
     return (
       <li>
@@ -52,8 +58,13 @@ class TodoList extends React.Component {
     }
     e.target.reset()
 
+    Perf.start();
     this.setState({
       items: [item].concat(this.state.items)
+    }, () => {
+      Perf.printInclusive();
+      Perf.printWasted();
+      Perf.stop();
     })
   }
 

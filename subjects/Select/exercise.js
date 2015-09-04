@@ -10,9 +10,76 @@ let styles = {}
 // Make this work like a normal <select><option/></select>
 
 class Select extends React.Component {
-  render () {
+  constructor (props, context) {
+    super(props, context);
+    this.state = {
+      value: this.props.defaultValue || null,
+      showChildren: false
+    };
+
+    if (!this.isUncontrolled() && !this.props.onChange) {
+      console.warn('This thing is gonna be read-only, etc. etc.');
+    }
+  }
+
+  isUncontrolled() {
+    return this.props.value == null;
+  }
+
+  toggle() {
+    this.setState({
+      showChildren: !this.state.showChildren
+    });
+  }
+
+  handleSelect(value) {
+    let nextState = {
+      showChildren: false
+    };
+
+    if (this.isUncontrolled()) {
+      nextState.value = value;
+    }
+
+    this.setState(nextState, () => {
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
+    })
+  }
+
+  getLabel() {
+    let label = null;
+    React.Children.forEach(this.props.children, (child) => {
+      let childValue = child.props.value;
+      if (
+        (this.isUncontrolled() && childValue === this.state.value) ||
+        (child.props.value === this.props.value)
+      ) {
+        label = child.props.children;
+      }
+    });
+    return label;
+  }
+
+  renderChildren() {
+    return React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        onSelect: (value) => this.handleSelect(value)
+      });
+    });
+  }
+
+  render() {
     return (
-      <div/>
+      <div style={styles.select} onClick={() => this.toggle()}>
+        <div style={styles.label}>{this.getLabel()} <span style={styles.arrow}>▾</span></div>
+        {this.state.showChildren && (
+          <div style={styles.options}>
+            {this.renderChildren()}
+          </div>
+        )}
+      </div>
     )
   }
 }
@@ -24,12 +91,35 @@ Select.propTypes = {
 };
 
 class Option extends React.Component {
-  render () {
+  constructor (props, context) {
+    super(props, context);
+    this.state = {
+      hovering: false
+    };
+  }
+
+  handleClick() {
+    this.props.onSelect(this.props.value);
+  }
+
+  render() {
     return (
-      <div/>
+      <div
+        style={this.state.hovering ? styles.optionHover : styles.option}
+        onClick={() => this.handleClick()}
+        onMouseEnter={() => this.setState({ hovering: true })}
+        onMouseLeave={() => this.setState({ hovering: false })}
+      >
+        {this.props.children}
+      </div>
     )
   }
 }
+
+Option.propTypes = {
+  onSelect: func,
+  value: any
+};
 
 // You can use these styles to not mess around w/ css if you'd like
 
@@ -66,7 +156,6 @@ styles.optionHover = {
 
 class App extends React.Component {
   constructor (props) {
-
     super(props);
     this.state = {
       selectValue: 'dosa'

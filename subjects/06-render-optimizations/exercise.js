@@ -19,16 +19,54 @@ class ListView extends React.Component {
     children: func.isRequired
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
+    this.state = {
+      availableHeight: 0, // Initially doesn't render any items.
+      scrollTop: 0
+    };
+  }
+
+  handleScroll(event) {
+    this.setState({
+      scrollTop: event.target.scrollTop
+    });
+  }
+
+  handleWindowResize() {
+    // Re-render with exactly as many items as will fit.
+    this.setState({
+      availableHeight: findDOMNode(this).clientHeight
+    });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
   render() {
-    let { children, items, itemHeight, style } = this.props
+    let { children, items, itemHeight, style } = this.props;
+    let { availableHeight, scrollTop } = this.state;
+
+    let scrollBottom = scrollTop + availableHeight;
+
+    let startIndex = Math.floor(scrollTop / itemHeight);
+    let endIndex = Math.ceil(scrollBottom / itemHeight);
 
     return (
       <div style={{ ...style, height: '100%', overflowY: 'scroll' }} onScroll={this.handleScroll}>
-        {children(items)}
+        {children(items.slice(startIndex, endIndex))}
       </div>
-    )
+    );
   }
- 
+
 }
 
 import convertNumberToEnglish from './lib/convertNumberToEnglish'
@@ -44,7 +82,7 @@ class RainbowList extends React.Component {
   }
 
   static defaultProps = {
-    length: 360
+    length: 500000
   }
 
   constructor(props, context) {
@@ -95,7 +133,7 @@ class RainbowList extends React.Component {
             style={{ position: 'absolute', width: '100%', top: item.index * itemHeight, pointerEvents: 'none' }}
           >
             <PlaceholderText {...item} height={itemHeight} />
-          </li> 
+          </li>
         )}
         </ol>
       }
